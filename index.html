@@ -3,66 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alianza Lima - Plan Maestro Modelo Híbrido (Andrés Zevallos)</title>
+    <title>Alianza Lima - Plan Maestro (Andrés Zevallos)</title>
     <style>
         :root { 
             --blanco: #FFFFFF; 
             --azul-alianza: #0A1E3F; 
             --azul-sutil: #112A52; 
-            --gris-tribuna: #F4F7FA; 
+            --gris-tribuna: #F7FAFC; 
             --dorado-gloria: #D4AF37; 
-            --texto-oscuro: #1A202C;
+            --texto-oscuro: #2D3748;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background: var(--azul-alianza); color: var(--texto-oscuro); overflow: hidden; height: 100vh; width: 100vw; }
         
-        /* Barra de Navegación Fija */
-        .nav-bar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10, 30, 63, 0.98); padding: 15px; display: flex; justify-content: center; gap: 12px; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow-x: auto; border-bottom: 3px solid var(--dorado-gloria); }
-        .nav-bar button { color: var(--blanco); background: transparent; font-size: 0.85rem; font-weight: bold; padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; white-space: nowrap; cursor: pointer; }
-        .nav-bar button:hover, .nav-bar button.active { background: var(--blanco); color: var(--azul-alianza); border-color: var(--blanco); }
+        /* Menú Flotante Premium - Oculto por defecto en la portada */
+        .nav-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(10, 30, 63, 0.98); padding: 10px 20px; display: flex; gap: 10px; z-index: 1000; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); overflow-x: auto; max-width: 95%; backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+        .nav-bar.visible { opacity: 1; pointer-events: auto; }
+        .nav-bar button { color: var(--blanco); background: transparent; border: none; font-size: 0.8rem; font-weight: 700; padding: 10px 18px; border-radius: 30px; transition: all 0.2s ease; white-space: nowrap; letter-spacing: 0.5px; cursor: pointer; }
+        .nav-bar button:hover, .nav-bar button.active { background: var(--dorado-gloria); color: var(--azul-alianza); }
 
-        /* Sistema de Diapositivas Ligeras */
-        .slide { display: none; height: 100vh; width: 100vw; flex-direction: column; justify-content: center; align-items: center; padding: 100px 40px 40px 40px; background: var(--blanco); position: relative; }
-        .slide.active { display: flex; }
+        /* Estructura de Diapositivas Fijas Independientes */
+        .slide { 
+            height: 100vh; 
+            width: 100vw;
+            display: none; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 100px 40px 40px 40px; 
+            background: var(--blanco); 
+            position: absolute; top: 0; left: 0; overflow: hidden;
+        }
+        .slide.active { display: flex; animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         
-        /* Fondos Alternados */
-        .slide-even { background: linear-gradient(90deg, #FFF 0%, #FFF 48%, var(--gris-tribuna) 48%, var(--gris-tribuna) 100%); }
-        .slide-odd { background: linear-gradient(90deg, var(--gris-tribuna) 0%, var(--gris-tribuna) 52%, #FFF 52%, #FFF 100%); }
+        /* Bastones Blanquiazules de Fondo de Alta Categoría */
+        .slide-even { background: linear-gradient(90deg, var(--blanco) 0%, var(--blanco) 45%, var(--gris-tribuna) 45%, var(--gris-tribuna) 100%); }
+        .slide-odd { background: linear-gradient(90deg, var(--gris-tribuna) 0%, var(--gris-tribuna) 55%, var(--blanco) 55%, var(--blanco) 100%); }
         
-        .slide-title { font-size: 2.2rem; color: var(--azul-alianza); margin-bottom: 20px; border-bottom: 4px solid var(--azul-alianza); width: 100%; max-width: 1000px; text-transform: uppercase; font-weight: bold; }
-        .box { width: 100%; max-width: 1000px; font-size: 1.2rem; line-height: 1.6; position: relative; }
+        /* Escudo en Marca de Agua */
+        .slide::before {
+            content: ""; position: absolute; width: 380px; height: 480px; right: 6%; bottom: 8%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 100 130"><path fill="%23D4AF37" opacity="0.035" d="M10,10 H90 V90 C90,110 50,130 50,130 C50,130 10,110 10,90 Z M25,30 H75 V45 H25 Z M40,55 H60 V105 H40 Z"/></svg>') no-repeat center;
+            background-size: contain; pointer-events: none; z-index: 1;
+        }
+
+        .slide-title { font-size: 2.4rem; color: var(--azul-alianza); margin-bottom: 25px; border-bottom: 4px solid var(--azul-alianza); width: 100%; max-width: 1050px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 900; }
+        .box { width: 100%; max-width: 1050px; font-size: 1.25rem; line-height: 1.7; z-index: 10; position: relative; }
         
-        /* Estilo Portadas Oscuras de Alto Contraste */
-        .identity-slide { background: linear-gradient(135deg, var(--azul-alianza) 0%, var(--azul-sutil) 100%) !important; color: var(--blanco) !important; }
-        .identity-slide h1 { color: var(--blanco) !important; font-size: 3.5rem; margin-bottom: 15px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); text-align: center; width: 100%; }
-        .identity-slide h2 { color: var(--dorado-gloria) !important; font-size: 1.6rem; margin-bottom: 35px; text-transform: uppercase; text-align: center; }
-        .identity-slide p { color: var(--blanco) !important; opacity: 0.9; text-align: center; }
+        /* Portada Monumental de Alto Impacto Limpia */
+        .identity-slide { 
+            background: radial-gradient(circle at 50% 45%, var(--azul-sutil) 0%, var(--azul-alianza) 85%) !important;
+            color: var(--blanco) !important; 
+        }
+        .main-title-container { max-width: 950px; text-align: center; }
+        .main-title-container h1 { color: var(--blanco) !important; font-size: 3.8rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; line-height: 1.2; text-shadow: 0 8px 30px rgba(0,0,0,0.7); margin-bottom: 5px; }
+        .main-title-container .divider { height: 5px; width: 180px; background: var(--dorado-gloria); margin: 25px auto; border-radius: 2px; box-shadow: 0 2px 10px rgba(212,175,55,0.4); }
+        .main-title-container h2 { color: var(--dorado-gloria) !important; font-size: 1.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+        .main-title-container p { color: var(--blanco) !important; font-size: 1.3rem; opacity: 0.85; font-style: italic; margin-bottom: 40px; }
         
+        /* Botón de Entrada de la Portada */
+        .enter-btn { background: transparent; border: 2px solid var(--dorado-gloria); color: var(--dorado-gloria); font-size: 1rem; font-weight: bold; padding: 12px 30px; border-radius: 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; transition: all 0.3s ease; }
+        .enter-btn:hover { background: var(--dorado-gloria); color: var(--azul-alianza); box-shadow: 0 0 20px rgba(212,175,55,0.4); transform: translateY(-2px); }
+
         /* Componentes */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 20px 0; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 20px 0; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 20px 0; }
-        .card { background: rgba(255, 255, 255, 0.98); padding: 25px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); border-top: 5px solid var(--azul-alianza); color: var(--texto-oscuro); }
-        .card h3 { color: var(--azul-alianza); margin-bottom: 15px; font-size: 1.35rem; font-weight: bold; padding-bottom: 5px; border-bottom: 2px solid var(--gris-tribuna); }
-        .alert { background: var(--azul-alianza); color: var(--blanco); padding: 25px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 25px; font-size: 1.25rem; border: 2px solid var(--dorado-gloria); }
+        .card { background: rgba(255, 255, 255, 0.98); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 6px solid var(--azul-alianza); }
+        .card h3 { color: var(--azul-alianza); margin-bottom: 15px; font-size: 1.4rem; font-weight: 800; padding-bottom: 8px; border-bottom: 2px solid var(--gris-tribuna); }
+        .alert { background: var(--azul-alianza); color: var(--blanco); padding: 25px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 30px; font-size: 1.3rem; border: 2px solid var(--dorado-gloria); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         
         li { margin-bottom: 12px; list-style-position: inside; }
-        strong { color: var(--azul-alianza); }
+        strong { color: var(--azul-alianza); font-weight: 700; }
         .identity-slide strong { color: var(--dorado-gloria); }
 
-        /* Firma Fija de Autor */
-        .author-signature { position: fixed; bottom: 15px; left: 20px; background: rgba(10, 30, 63, 0.95); color: var(--blanco); padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: bold; border-left: 3px solid var(--dorado-gloria); z-index: 999; box-shadow: 0 2px 8px rgba(0,0,0,0.3); pointer-events: none; transition: opacity 0.3s ease; }
+        /* Firma de Autor Fija */
+        .author-signature { position: fixed; bottom: 25px; left: 30px; background: rgba(10, 30, 63, 0.95); color: var(--blanco); padding: 10px 22px; border-radius: 30px; font-size: 0.85rem; font-weight: bold; border-left: 4px solid var(--dorado-gloria); z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.3); pointer-events: none; opacity: 0; transition: opacity 0.3s ease; }
+        .author-signature.visible { opacity: 1; }
         .author-signature span { color: var(--dorado-gloria); }
 
-        @media (max-width: 1100px) { .author-signature { display: none !important; } }
-        @media (max-width: 768px) { .grid, .grid-3 { grid-template-columns: 1fr; } .identity-slide h1 { font-size: 2rem; } .slide-title { font-size: 1.5rem; } }
+        @media (max-width: 1200px) { .author-signature { display: none !important; } }
+        @media (max-width: 768px) { .grid, .grid-3 { grid-template-columns: 1fr; } .main-title-container h1 { font-size: 2rem; } .slide-title { font-size: 1.4rem; } .slide { padding-top: 120px; overflow-y: auto; } }
     </style>
 </head>
 <body>
 
     <div class="author-signature" id="firma-autor">Propuesta por: <span>Andrés Zevallos</span> (Hincha Aliancista)</div>
 
-    <!-- BOTONES CON ACTIVACIÓN DIRECTA JS -->
-    <nav class="nav-bar">
+    <!-- MENÚ INTELIGENTE CON CONTROLADORES JAVASCRIPT FIJOS -->
+    <nav class="nav-bar" id="menu-principal">
         <button onclick="saltarA(0)" class="nav-btn active">Inicio</button>
         <button onclick="saltarA(1)" class="nav-btn">1. Esquema Dual</button>
         <button onclick="saltarA(2)" class="nav-btn">2. Blindaje 71/29</button>
@@ -71,58 +100,62 @@
         <button onclick="saltarA(5)" class="nav-btn">5. Gobernanza 20k</button>
     </nav>
 
-    <!-- SLIDE 0: PORTADA MONUMENTAL INDEPENDIENTE -->
+    <!-- PANTALLA 0: PORTADA TOTALMENTE INDEPENDIENTE -->
     
-        <div class="box">
-            <h1>PLAN MAESTRO: REFORMA SOCIETARIA</h1>
+        <div class="main-title-container">
+            <h1>PLAN MAESTRO<br>REFORMA SOCIETARIA</h1>
+            <div class="divider"></div>
             <h2>Transición hacia el Modelo Híbrido Blanquiazul</h2>
-            <p style="font-size: 1.25rem;">Estrategia institucional diseñada para el escenario post-salida del régimen concursal</p>
+            <p>Estrategia institucional diseñada para el escenario post-salida del régimen concursal</p>
+            <button class="enter-btn" onclick="saltarA(1)">Ver Propuesta</button>
         </div>
     </section>
 
-    <!-- SLIDE 1: CAPÍTULO 1 -->
+    <!-- PANTALLA 1: CAPÍTULO 1 -->
     <section class="slide slide-even" id="pantalla-1">
-        <h2 class="slide-title">1. Architecture Legal: El Esquema Dual</h2>
+        <h2 class="slide-title">1. Arquitectura Legal: El Esquema Dual</h2>
         <div class="box">
             <div class="grid">
                 <div class="card">
                     <h3>A. El Club Social (Asociación Civil)</h3>
                     <ul>
                         <li>Entidad <strong>sin fines de lucro</strong> soberana, gobernada por los socios en las urnas.</li>
-                        <li>Propietaria absoluta de <strong>Matute</strong>, las canteras y el vóley.</li>
+                        <li>Propietaria absoluta de <strong>Matute</strong>, la identidad histórica, las canteras y disciplinas como el vóley.</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3>B. La Empresa (Alianza Lima Fútbol S.A.C.)</h3>
                     <ul>
                         <li>Sociedad Anónima Cerrada de alta competencia comercial.</li>
-                        <li>Encargada de gestionar el <strong>fútbol profesional</strong> masculino y femenino.</li>
+                        <li>Encargada exclusiva de gestionar el <strong>fútbol profesional</strong> masculino y femenino.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
-    <!-- SLIDE 2: CAPÍTULO 2 -->
+    <!-- PANTALLA 2: CAPÍTULO 2 -->
     <section class="slide slide-odd" id="pantalla-2">
         <h2 class="slide-title">2. Distribución de Acciones y Blindaje</h2>
         <div class="box">
             <div class="grid">
-                <div class="card" style="background: var(--azul-alianza); color: white; text-align: center; border: none;">
+                <div class="card" style="background: var(--azul-alianza); color: white; text-align: center; border: none; box-shadow: 0 10px 30px rgba(10,30,63,0.3);">
                     <h3 style="color: var(--dorado-gloria); border-color: var(--azul-sutil);">El Club Social (Socios)</h3>
-                    <p style="font-size: 4.5rem; font-weight: bold; margin: 10px 0;">71.00%</p>
-                    <p><strong>Control Político Total.</strong> Ninguna corporación externa decide el destino del club.</p>
+                    <p style="font-size: 4.5rem; font-weight: 900; margin: 10px 0;">71.00%</p>
+                    <p style="opacity: 0.9;"><strong>Control Político Total.</strong> Ninguna corporación externa puede decidir el destino de la identidad del club.</p>
                 </div>
                 <div class="card" style="text-align: center; border-top-color: var(--dorado-gloria);">
                     <h3>Inversionistas Corporativos</h3>
-                    <p style="font-size: 4.5rem; font-weight: bold; margin: 10px 0; color: var(--azul-alianza);">29.00%</p>
-                    <p>Capital fragmentado en un límite estricto de <strong>9.66% máximo por marca</strong>.</p>
+                    <p style="font-size: 4.5rem; font-weight: 900; margin: 10px 0; color: var(--azul-alianza);">29.00%</p>
+                    <p>Capital fragmentado en un límite estricto de <strong>9.66% máximo por marca</strong> (Ej: Banco, Telecomunicaciones, Indumentaria).</p>
                 </div>
             </div>
-            <div class="alert">🔒 EL CANDADO DE MATUTE: Cualquier intento de ampliar el capital privado por encima del 29% requerirá el voto a favor del 75% de los socios activos en Asamblea.</div>
+            <div class="alert">
+                🔒 EL CANDADO DE MATUTE: Cualquier intento de ampliar el capital privado por encima del 29% requerirá obligatoriamente el voto a favor del 75% de los socios activos en Asamblea.
+            </div>
         </div>
     </section>
 
-    <!-- SLIDE 3: CAPÍTULO 3 -->
+    <!-- PANTALLA 3: CAPÍTULO 3 -->
     <section class="slide slide-even" id="pantalla-3">
         <h2 class="slide-title">3. Plan de Captación Masiva de Socios</h2>
         <div class="box">
@@ -130,7 +163,8 @@
                 <div class="card">
                     <h3>Inscripción 100% Digital</h3>
                     <ul>
-                        <li>Afiliación directa vía <strong>App Oficial</strong> en 5 minutos con biometría RENIEC.</li>
+                        <li>Afiliación directa vía <strong>App Oficial</strong> en 5 minutos.</li>
+                        <li>Validación biométrica enlazada con <strong>RENIEC</strong>.</li>
                         <li>Eliminación del requisito de firmas de socios avales.</li>
                     </ul>
                 </div>
@@ -143,71 +177,104 @@
                 <div class="card">
                     <h3>Cuotas Populares</h3>
                     <ul>
-                        <li><strong>Inscripción inicial:</strong> S/. 50.</li>
+                        <li><strong>Inscripción inicial:</strong> S/. 50 (Pago único).</li>
                         <li><strong>Mensualidad Adulto:</strong> S/. 30 soles.</li>
+                        <li><strong>Mensualidad Menores:</strong> S/. 15 soles.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SLIDE 4: CAPÍTULO 4 -->
+    <!-- PANTALLA 4: CAPÍTULO 4 -->
     <section class="slide slide-odd" id="pantalla-4">
         <h2 class="slide-title">4. Plan Amnistía Blanquiazul</h2>
         <div class="box">
             <div class="grid">
                 <div class="card">
                     <h3>Condonación Total de Moras</h3>
-                    <p>Cero cobros por intereses acumulados. Al socio adeudado se le calculará únicamente el saldo líquido neto.</p>
+                    <p>Cero cobros por intereses acumulados. Al socio afectado se le calculará únicamente el saldo líquido de sus últimos meses activos.</p>
                 </div>
                 <div class="card">
                     <h3>Programa "Ponte al Día"</h3>
                     <ul>
-                        <li>Fraccionamiento hasta en 12 cuotas fijas sin intereses comerciales.</li>
-                        <li>Se restituye la antigüedad al completar el plan.</li>
+                        <li>Fraccionamiento de la deuda base en hasta <strong>12 cuotas fijas sin intereses</strong> comerciales.</li>
+                        <li>El socio recupera automáticamente sus derechos de "Hábil" al abonar la primera cuota.</li>
                     </ul>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 15px; border-top-color: var(--dorado-gloria);">
+                <h3>Restitución Completa de la Antigüedad</h3>
+                <p>Una vez completado el plan, el club <strong>restituye el 100% de los años de antigüedad</strong> acumulados del socio histórico, protegiendo su estatus dentro de la vida política del club.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PANTALLA 5: CAPÍTULO 5 Y CIERRE -->
+    
+        <div class="box">
+            <h2 class="slide-title" style="text-align: center; width: 100%;">5. Gobernanza Eficiente de 20,000 Socios</h2>
+            <div class="grid-3">
+                <div class="card" style="color: var(--texto-oscuro);">
+                    <h3>Voto Democrático</h3>
+                    <p>El socio sigue eligiendo en elecciones libres al Presidente del Club Social cada 4 años.</p>
+                </div>
+                <div class="card" style="color: var(--texto-oscuro);">
+                    <h3>Control Político</h3>
+                    <p>El presidente de la hinchada lidera el directorio de la empresa de fútbol profesional.</p>
+                </div>
+                <div class="card" style="color: var(--texto-oscuro);">
+                    <h3>Gerencia Profesional</h3>
+                    <p>Las finanzas quedan en manos de expertos internacionales (CEO y CFO) de carrera auditados.</p>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 40px; text-align: center; border-top: 5px solid var(--dorado-gloria); background: rgba(255, 255, 255, 0.98); color: var(--texto-oscuro); padding-bottom: 35px;">
+                <h3>¡Muchas Gracias!</h3>
+                <p style="font-size: 1.1rem; font-weight: bold; color: var(--azul-sutil); margin-bottom: 15px;">Esta propuesta está abierta al debate técnico de la familia blanquiazul.</p>
+                <div style="margin-top: 15px; font-size: 0.95rem; color: #555; font-style: italic; border-top: 1px solid #E2E8F0; padding-top: 15px;">
+                    Documento diseñado por: <strong>Andrés Zevallos</strong><br>
+                    Socio, Hincha y Defensor de la Identidad de Alianza Lima
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SLIDE 5: CAPÍTULO 5 Y CIERRE -->
-    
-        <div class="box">
-            <h2 class="slide-title" style="text-align: center; width: 100%;">5. Gobernanza Eficiente de 20,000 Socios</h2>
-            <div class="grid-3">
-                <div class="card" style="color: var(--texto-oscuro);"><h3>Voto Directo</h3><p>El socio sigue eligiendo democráticamente al Presidente del Club Social cada 4 años.</p></div>
-                <div class="card" style="color: var(--texto-oscuro);"><h3>Control Político</h3><p>El presidente elegido por la hinchada lidera el directorio de fútbol profesional.</p></div>
-                <div class="card" style="color: var(--texto-oscuro);"><h3>Gerencia</h3><p>Las finanzas quedan en manos de expertos (CEO y CFO) de carrera auditados.</p></div>
-            </div>
-            <div class="card" style="margin-top: 40px; text-align: center; border-top: 5px solid var(--dorado-gloria); background: rgba(255, 255, 255, 0.98); color: var(--texto-oscuro); padding-bottom: 35px;">
-                <h3>¡Muchas Gracias!</h3>
-                <p style="font-weight: bold; color: var(--azul-sutil);">Esta propuesta está abierta al debate técnico de la familia blanquiazul.</p>
-                <div style="margin-top: 15px; font-size: 0.95rem; color: #555; font-style: italic; border-top: 1px solid #E2E8F0; padding-top: 15px;">Documento diseñado por: <strong>Andrés Zevallos</strong><br>Socio e Hincha de Alianza Lima</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SCRIPT CLÁSICO LIGERO E INDESTRUCTIBLE -->
+    <!-- MOTOR DE CONTROL MAESTRO DE DIAPOSITIVAS INTERACTIVAS -->
     <script>
+        const menu = document.getElementById('menu-principal');
+        const firma = document.getElementById('firma-autor');
         const botones = document.querySelectorAll('.nav-bar button');
-        function saltarA(num) {
-            // Apagar todas las diapositivas
-            for (let i = 0; i <= 5; i++) {
-                document.getElementById('pantalla-' + i).style.display = 'none';
-            }
-            // Encender la pantalla solicitada
-            document.getElementById('pantalla-' + num).style.display = 'flex';
-            
-            // Marcar botón activo
-            botones.forEach(btn => btn.classList.remove('active'));
-            botones[num].classList.add('active');
 
-            // Control de firma flotante para que no tape los créditos en el cierre
-            const firma = document.getElementById('firma-autor');
-            if (firma) {
-                if (num === 5) { firma.style.opacity = '0'; }
-                else { firma.style.opacity = '1'; }
+        function saltarA(numeroSlide) {
+            // Ocultar todas las pantallas
+            for (let i = 0; i <= 5; i++) {
+                const slide = document.getElementById('pantalla-' + i);
+                if (slide) slide.classList.remove('active');
+            }
+            
+            // Activar la pantalla elegida
+            const slideDestino = document.getElementById('pantalla-' + numeroSlide);
+            if (slideDestino) slideDestino.classList.add('active');
+
+            // Quitar clase activa a todos los botones del menú
+            botones.forEach(btn => btn.classList.remove('active'));
+            // Activar botón correspondiente
+            botones[numeroSlide].classList.add('active');
+
+            // LOGICA DE CONTROLES FLOTANTES INTELIGENTES
+            if (numeroSlide === 0) {
+                // Si está en la portada, apaga el menú de arriba y la firma
+                menu.classList.remove('visible');
+                firma.classList.remove('visible');
+            } else if (numeroSlide === 5) {
+                // Si está al final de todo (Gobernanza), muestra menú pero apaga la firma flotante
+                menu.classList.add('visible');
+                firma.classList.remove('visible');
+            } else {
+                // En los capítulos del 1 al 4, enciende todo de forma impecable
+                menu.classList.add('visible');
+                firma.classList.add('visible');
             }
         }
     </script>
