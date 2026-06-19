@@ -33,6 +33,10 @@
         .identity-slide strong { color: var(--dorado-gloria); }
         .author-signature { position: fixed; bottom: 15px; left: 20px; background: rgba(10, 30, 63, 0.95); color: var(--blanco); padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: bold; border-left: 3px solid var(--dorado-gloria); z-index: 999; box-shadow: 0 2px 8px rgba(0,0,0,0.3); pointer-events: none; }
         .author-signature span { color: var(--dorado-gloria); }
+        
+        /* Ajuste inteligente para ocultar la firma flotante solo en la pantalla final */
+        #gobierno:target ~ .author-signature, #gobierno.active ~ .author-signature { display: none !important; }
+        @media (max-width: 1100px) { .author-signature { display: none !important; } }
         @media (max-width: 768px) { .grid, .grid-3 { grid-template-columns: 1fr; } #portada h1 { font-size: 2rem; } .slide-title { font-size: 1.5rem; } .slide::before { display: none; } }
     </style>
 </head>
@@ -145,23 +149,23 @@
                 </div>
                 <div class="card">
                     <h3>Votaciones vía Blockchain</h3>
-                    <p>Para elecciones presidenciales o cambios estatutarios, vota el 100% de los socios usando una plataforma digital encriptada desde su celular.</p>
+                    <p>Para elecciones presidenciales o cambios estatutarias, vota el 100% de los socios usando una plataforma digital encriptada desde su celular.</p>
                 </div>
             </div>
         </div>
     </section>
     
-        <h2 class="slide-title" style="text-align: center; width: 100%;">6. El Futuro Institucional de Alianza Lima</h2>
         <div class="box" style="margin-top: 20px;">
+            <h2 class="slide-title" style="text-align: center; width: 100%;">6. El Futuro Institucional de Alianza Lima</h2>
             <div class="grid-3">
                 <div class="card" style="color: var(--texto-oscuro);"><h3>Voto e Identidad</h3><p>El socio sigue eligiendo democráticamente al Presidente del Club Social cada 4 años.</p></div>
                 <div class="card" style="color: var(--texto-oscuro);"><h3>Control</h3><p>El presidente elegido por la hinchada lidera el directorio de la empresa de fútbol profesional.</p></div>
                 <div class="card" style="color: var(--texto-oscuro);"><h3>Gerencia</h3><p>Las finanzas y contrataciones quedan en manos de expertos (CEO y CFO) auditados.</p></div>
             </div>
-            <div class="card" style="margin-top: 40px; text-align: center; border-top: 5px solid var(--dorado-gloria); background: rgba(255, 255, 255, 0.98); color: var(--texto-oscuro);">
+            <div class="card" style="margin-top: 40px; text-align: center; border-top: 5px solid var(--dorado-gloria); background: rgba(255, 255, 255, 0.98); color: var(--texto-oscuro); padding-bottom: 35px;">
                 <h3>¡Muchas Gracias!</h3>
-                <p style="font-weight: bold; color: var(--azul-sutil);">Esta propuesta está abierta al debate técnico de la familia blanquiazul.</p>
-                <div style="margin-top: 15px; font-size: 0.95rem; color: #555; font-style: italic;">Documento diseñado por: <strong>Andrés Zevallos</strong><br>Socio e Hincha de Alianza Lima</div>
+                <p style="font-weight: bold; color: var(--azul-sutil); margin-bottom: 15px;">Esta propuesta está abierta al debate técnico de la familia blanquiazul.</p>
+                <div style="margin-top: 15px; font-size: 0.95rem; color: #555; font-style: italic; border-top: 1px solid #E2E8F0; padding-top: 15px;">Documento diseñado por: <strong>Andrés Zevallos</strong><br>Socio e Hincha de Alianza Lima</div>
             </div>
         </div>
     </section>
