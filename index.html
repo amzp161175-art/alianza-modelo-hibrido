@@ -15,7 +15,7 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        /* Contenedor magnético moderno de diapositivas */
+        /* Contenedor magnético moderno */
         html { 
             scroll-behavior: smooth; 
             scroll-snap-type: y mandatory;
@@ -23,9 +23,9 @@
         body { background: var(--azul-alianza); color: var(--texto-oscuro); overflow-x: hidden; }
         
         /* Menú Flotante Premium */
-        .nav-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(10, 30, 63, 0.95); padding: 10px 20px; display: flex; gap: 10px; z-index: 1000; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); overflow-x: auto; max-width: 95%; backdrop-filter: blur(10px); }
-        .nav-bar a { color: var(--blanco); text-decoration: none; font-size: 0.8rem; font-weight: 700; padding: 10px 18px; border-radius: 30px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; letter-spacing: 0.5px; }
-        .nav-bar a:hover { background: var(--dorado-gloria); color: var(--azul-alianza); transform: translateY(-2px); }
+        .nav-bar { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(10, 30, 63, 0.96); padding: 10px 20px; display: flex; gap: 10px; z-index: 1000; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); overflow-x: auto; max-width: 95%; backdrop-filter: blur(10px); }
+        .nav-bar button { color: var(--blanco); background: transparent; border: none; font-size: 0.8rem; font-weight: 700; padding: 10px 18px; border-radius: 30px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap; letter-spacing: 0.5px; cursor: pointer; }
+        .nav-bar button:hover { background: var(--dorado-gloria); color: var(--azul-alianza); transform: translateY(-2px); }
 
         /* Estructura de Pantalla Completa Cinematográfica */
         .slide { 
@@ -35,14 +35,14 @@
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            padding: 80px 40px 40px 40px; 
+            padding: 100px 40px 40px 40px; 
             background: var(--blanco); 
             position: relative; 
             overflow: hidden; 
             scroll-snap-align: start;
         }
         
-        /* Bastones Blanquiazules Estilizados en Alta Categoría */
+        /* Bastones Blanquiazules Estilizados */
         .slide-even { background: linear-gradient(90deg, var(--blanco) 0%, var(--blanco) 45%, var(--gris-tribuna) 45%, var(--gris-tribuna) 100%); }
         .slide-odd { background: linear-gradient(90deg, var(--gris-tribuna) 0%, var(--gris-tribuna) 55%, var(--blanco) 55%, var(--blanco) 100%); }
         
@@ -54,11 +54,9 @@
         }
 
         .slide-title { font-size: 2.6rem; color: var(--azul-alianza); margin-bottom: 30px; border-bottom: 4px solid var(--azul-alianza); width: 100%; max-width: 1050px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 900; }
-        .box { width: 100%; max-width: 1050px; font-size: 1.25rem; line-height: 1.7; z-index: 10; position: relative; animation: slideUp 0.6s ease-out; }
+        .box { width: 100%; max-width: 1050px; font-size: 1.25rem; line-height: 1.7; z-index: 10; position: relative; }
         
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Pantallas de Identidad con Textura y Luces de Matute */
+        /* Pantallas de Identidad */
         .identity-slide { 
             background: radial-gradient(circle at 50% 30%, var(--azul-sutil) 0%, var(--azul-alianza) 80%) !important;
             color: var(--blanco) !important; 
@@ -94,16 +92,17 @@
 </head>
 <body>
 
-    <div class="author-signature">Propuesta por: <span>Andrés Zevallos</span> (Hincha Aliancista)</div>
+    <div class="author-signature" id="firma-dinamica">Propuesta por: <span>Andrés Zevallos</span> (Hincha Aliancista)</div>
 
+    <!-- BOTONES ACTIVADOS POR NUEVO MOTOR MAESTRO JS -->
     <nav class="nav-bar">
-        <a href="#portada">Inicio</a>
-        <a href="#arquitectura">1. Esquema Dual</a>
-        <a href="#acciones">2. Blindaje 71/29</a>
-        <a href="#captacion">3. Plan de Captación</a>
-        <a href="#reactivacion">4. Amnistía</a>
-        <a href="#asambleas">5. 20k Socios</a>
-        <a href="#gobierno">6. Gobierno</a>
+        <button onclick="navegarMecanico('portada')">Inicio</button>
+        <button onclick="navegarMecanico('arquitectura')">1. Esquema Dual</button>
+        <button onclick="navegarMecanico('acciones')">2. Blindaje 71/29</button>
+        <button onclick="navegarMecanico('captacion')">3. Plan de Captación</button>
+        <button onclick="navegarMecanico('reactivacion')">4. Amnistía</button>
+        <button onclick="navegarMecanico('asambleas')">5. 20k Socios</button>
+        <button onclick="navegarMecanico('gobierno')">6. Gobierno</button>
     </nav>
 
     <!-- SLIDE 0: PORTADA -->
@@ -228,7 +227,7 @@
                 </div>
                 <div class="card">
                     <h3>Votaciones Macro vía Blockchain</h3>
-                    <p>Para decisiones fundamentales (Elección de Directiva o cambios estatutarios), vota el <strong>100% de los socios</strong> usando una plataforma digital encriptada desde su celular.</p>
+                    <p>Para decisiones fundamentales (Elección de Directiva o cambios estatutarios), vota el 100% de los socios usando una plataforma digital encriptada desde su celular.</p>
                 </div>
             </div>
         </div>
@@ -264,5 +263,28 @@
         </div>
     </section>
 
+    <!-- NUEVO SCRIPT DE NAVEGACIÓN ABSOLUTA -->
+    <script>
+        function navegarMecanico(destinoId) {
+            const pantalla = document.getElementById(destinoId);
+            if (pantalla) {
+                // Fuerza al navegador a centrar la diapositiva en pantalla rompiendo el bloqueo del snap
+                pantalla.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            // Ocultamiento inteligente de tu firma
+            const firma = document.getElementById('firma-dinamica');
+            if (firma) {
+                if (destinoId === 'gobierno') {
+                    firma.style.opacity = '0';
+                    firma.style.transition = 'opacity 0.3s ease';
+                } else {
+                    if (window.innerWidth > 1200) {
+                        firma.style.opacity = '1';
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
