@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alianza Lima - Plan Maestro (Andrés Zevallos)</title>
 
-    <!-- GOOGLE FONTS: Bebas Neue para títulos de impacto, Inter para cuerpo de texto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* =============================================
-           VARIABLES DE COLOR - Paleta Alianza Lima
-        ============================================= */
         :root {
             --blanco: #FFFFFF;
             --azul-alianza: #0A1E3F;
@@ -25,9 +21,6 @@
             --sombra: 0 8px 30px rgba(0,0,0,0.10);
         }
 
-        /* =============================================
-           RESET Y BASE
-        ============================================= */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         body {
@@ -37,10 +30,6 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* =============================================
-           ANIMACIONES AL SCROLL (Intersection Observer)
-           Las secciones arrancan invisibles y suben al aparecer
-        ============================================= */
         .fade-up {
             opacity: 0;
             transform: translateY(40px);
@@ -58,13 +47,8 @@
             from { opacity: 0; transform: translateY(30px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        .hero-content {
-            animation: heroEntrance 1s ease forwards;
-        }
+        .hero-content { animation: heroEntrance 1s ease forwards; }
 
-        /* =============================================
-           BARRA DE NAVEGACIÓN FIJA
-        ============================================= */
         .nav-bar {
             position: fixed; top: 0; left: 0; width: 100%;
             background: rgba(10, 30, 63, 0.97);
@@ -94,9 +78,6 @@
             border-color: var(--dorado-gloria);
         }
 
-        /* =============================================
-           ESTRUCTURA DE SECCIONES
-        ============================================= */
         .slide {
             min-height: 100vh;
             width: 100vw;
@@ -131,9 +112,6 @@
             line-height: 1.7;
         }
 
-        /* =============================================
-           PORTADA HERO
-        ============================================= */
         .identity-slide {
             background: linear-gradient(145deg, #061528 0%, var(--azul-alianza) 50%, var(--azul-sutil) 100%) !important;
             color: var(--blanco) !important;
@@ -165,9 +143,6 @@
         strong { color: var(--azul-alianza); }
         .identity-slide strong { color: var(--dorado-gloria); }
 
-        /* =============================================
-           ESCUDO SVG EN PORTADA
-        ============================================= */
         .escudo-container {
             margin: 30px auto 35px auto;
             display: flex;
@@ -180,9 +155,6 @@
             50%       { filter: drop-shadow(0 0 35px rgba(212,175,55,0.8)); }
         }
 
-        /* =============================================
-           TARJETAS
-        ============================================= */
         .grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 20px 0; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 20px 0; }
 
@@ -233,11 +205,51 @@
             box-shadow: var(--sombra);
         }
 
+        /* Badge estilo Bayern para la sección Cantera */
+        .badge {
+            display: inline-block;
+            background: var(--dorado-suave);
+            color: var(--azul-alianza);
+            border: 1px solid var(--dorado-gloria);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tabla de beneficios para Membresía */
+        .benefit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+        }
+        .benefit-table th {
+            background: var(--azul-alianza);
+            color: var(--dorado-gloria);
+            padding: 14px 18px;
+            text-align: left;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        .benefit-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--gris-tribuna);
+            font-size: 1rem;
+        }
+        .benefit-table tr:nth-child(even) td { background: var(--gris-tribuna); }
+        .benefit-table tr:last-child td { border-bottom: none; }
+        .check { color: #22c55e; font-weight: bold; font-size: 1.1rem; }
+        .cross { color: #cbd5e1; font-size: 1.1rem; }
+
         li { margin-bottom: 10px; list-style-position: inside; }
 
-        /* =============================================
-           FIRMA FIJA
-        ============================================= */
         .author-signature {
             position: fixed; bottom: 15px; left: 20px;
             background: rgba(10, 30, 63, 0.95);
@@ -254,9 +266,6 @@
         }
         .author-signature span { color: var(--dorado-gloria); }
 
-        /* =============================================
-           RESPONSIVE
-        ============================================= */
         @media (max-width: 1100px) { .author-signature { display: none !important; } }
         @media (max-width: 768px) {
             .grid, .grid-3 { grid-template-columns: 1fr; }
@@ -264,6 +273,7 @@
             .slide-title { font-size: 2rem; }
             .nav-bar { flex-wrap: wrap; }
             .slide { padding: 120px 20px 60px 20px; }
+            .benefit-table th, .benefit-table td { padding: 10px 12px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -274,10 +284,13 @@
     <nav class="nav-bar">
         <a href="#portada">Inicio</a>
         <a href="#arquitectura">1. Esquema Dual</a>
-        <a href="#acciones">2. Blindaje 71/29</a>
-        <a href="#captacion">3. Plan de Captación</a>
-        <a href="#reactivacion">4. Amnistía</a>
-        <a href="#administración">5. Administración 20k</a>
+        <a href="#cantera">2. Cantera</a>
+        <a href="#acciones">3. Blindaje 71/29</a>
+        <a href="#captacion">4. Captación</a>
+        <a href="#membresia">5. Membresía</a>
+        <a href="#reactivacion">6. Amnistía</a>
+        <a href="#gobernanza">7. Gobernanza</a>
+        <a href="#transparencia">8. Transparencia</a>
     </nav>
 
     <!-- PORTADA -->
@@ -311,7 +324,7 @@
         </div>
     </section>
 
-    <!-- CAPÍTULO 1 -->
+    <!-- CAPÍTULO 1: ARQUITECTURA LEGAL -->
     <section class="slide slide-even" id="arquitectura">
         <h2 class="slide-title fade-up">1. Arquitectura Legal: El Esquema Dual</h2>
         <div class="box">
@@ -341,9 +354,54 @@
         </div>
     </section>
 
-    <!-- CAPÍTULO 2 -->
-    <section class="slide slide-odd" id="acciones">
-        <h2 class="slide-title fade-up">2. Distribución de Acciones y Blindaje</h2>
+    <!-- CAPÍTULO 2: CANTERA COMO ACTIVO ESTRATÉGICO (NUEVA) -->
+    <section class="slide slide-odd" id="cantera">
+        <h2 class="slide-title fade-up">2. La Cantera como Activo Estratégico</h2>
+        <div class="box">
+            <p style="margin-bottom: 25px;" class="fade-up">Inspirado en el modelo Bayern: la academia no es un gasto, es el principal negocio sostenible del club.</p>
+            <div class="grid-3">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <span class="badge">Modelo Bayern</span>
+                    <h3>Valorización Económica</h3>
+                    <p>Cada jugador formado en La Granja tiene un <strong>valor de mercado contabilizado</strong>. La cantera es el activo más rentable del club — un jugador vendido puede financiar dos temporadas.</p>
+                </div>
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <span class="badge">Estructura</span>
+                    <h3>Academia Profesionalizada</h3>
+                    <ul>
+                        <li>Director de Cantera con <strong>perfil internacional</strong> y contrato por objetivos.</li>
+                        <li>Categorías desde sub-8 hasta sub-20 con metodología unificada.</li>
+                        <li>Convenios con colegios para garantizar la educación del jugador.</li>
+                    </ul>
+                </div>
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <span class="badge">Ingresos</span>
+                    <h3>Fuente de Financiamiento</h3>
+                    <ul>
+                        <li><strong>30% de toda venta</strong> de jugador formado retorna al fondo de cantera.</li>
+                        <li>Cláusulas de recompra y porcentaje de futura venta en cada transferencia.</li>
+                        <li>Alianzas con clubes europeos para colocación de talentos.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="alert fade-up">
+                ⚽ META: Que al menos 3 jugadores de La Granja integren el plantel profesional cada temporada — reduciendo la dependencia de contrataciones externas costosas.
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 3: DISTRIBUCIÓN DE ACCIONES -->
+    <section class="slide slide-even" id="acciones">
+        <h2 class="slide-title fade-up">3. Distribución de Acciones y Blindaje</h2>
         <div class="box">
             <div class="grid">
                 <div class="card fade-up" style="background: var(--azul-alianza); color: white; text-align: center; border: none;">
@@ -369,9 +427,9 @@
         </div>
     </section>
 
-    <!-- CAPÍTULO 3 -->
-    <section class="slide slide-even" id="captacion">
-        <h2 class="slide-title fade-up">3. Plan de Captación Masiva de Socios</h2>
+    <!-- CAPÍTULO 4: CAPTACIÓN DE SOCIOS -->
+    <section class="slide slide-odd" id="captacion">
+        <h2 class="slide-title fade-up">4. Plan de Captación Masiva de Socios</h2>
         <div class="box">
             <p style="margin-bottom: 25px;" class="fade-up">Estrategia agresiva para democratizar el club y romper las barreras de afiliación:</p>
             <div class="grid-3">
@@ -410,9 +468,76 @@
         </div>
     </section>
 
-    <!-- CAPÍTULO 4 -->
+    <!-- CAPÍTULO 5: MEMBRESÍA COMO EXPERIENCIA (NUEVA) -->
+    <section class="slide slide-even" id="membresia">
+        <h2 class="slide-title fade-up">5. Membresía como Experiencia</h2>
+        <div class="box">
+            <p style="margin-bottom: 25px;" class="fade-up">Ser socio de Alianza Lima no es solo un derecho político — es una experiencia de vida blanquiazul con beneficios concretos y exclusivos.</p>
+
+            <table class="benefit-table fade-up">
+                <thead>
+                    <tr>
+                        <th>Beneficio</th>
+                        <th>Socio Joven (hasta 25)</th>
+                        <th>Socio Adulto</th>
+                        <th>Socio Internacional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🎟️ Prioridad en compra de entradas</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                    </tr>
+                    <tr>
+                        <td>🏟️ Acceso a entrenamiento abierto anual</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                        <td class="cross">—</td>
+                    </tr>
+                    <tr>
+                        <td>🛍️ Descuento 15% en tienda oficial</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                    </tr>
+                    <tr>
+                        <td>🗳️ Voto en elecciones del club</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                    </tr>
+                    <tr>
+                        <td>📋 Acceso al Informe Financiero Anual</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔</td>
+                    </tr>
+                    <tr>
+                        <td>🎙️ Invitación a Asamblea General</td>
+                        <td class="cross">—</td>
+                        <td class="check">✔</td>
+                        <td class="check">✔ (virtual)</td>
+                    </tr>
+                    <tr>
+                        <td>⭐ Meet & Greet con plantel (1 vez/año)</td>
+                        <td class="cross">—</td>
+                        <td class="check">✔ (sorteo)</td>
+                        <td class="cross">—</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert fade-up" style="margin-top: 25px;">
+                💙 La membresía no termina en la cuota mensual. Ser socio blanquiazul debe sentirse como pertenecer a algo grande todos los días del año.
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 6: AMNISTÍA -->
     <section class="slide slide-odd" id="reactivacion">
-        <h2 class="slide-title fade-up">4. Plan Amnistía Blanquiazul</h2>
+        <h2 class="slide-title fade-up">6. Plan Amnistía Blanquiazul</h2>
         <div class="box">
             <p style="margin-bottom: 25px;" class="fade-up">Justicia histórica para recuperar a los socios históricos suspendidos por deuda:</p>
             <div class="grid">
@@ -444,10 +569,10 @@
         </div>
     </section>
 
-    <!-- CAPÍTULO 5 -->
-    <section class="slide slide-even" id="administración">
+    <!-- CAPÍTULO 7: GOBERNANZA -->
+    <section class="slide slide-even" id="gobernanza">
         <div class="box">
-            <h2 class="slide-title fade-up" style="text-align: center; width: 100%;">5. Administración Eficiente de 20,000 Socios</h2>
+            <h2 class="slide-title fade-up" style="text-align: center; width: 100%;">7. Gobernanza Eficiente de 20,000 Socios</h2>
             <p style="text-align: center; margin-bottom: 30px;" class="fade-up">Cómo mantener el orden institucional, la transparencia y el voto directo en una masa social masiva:</p>
             <div class="grid-3">
                 <div class="card fade-up">
@@ -472,7 +597,63 @@
                     <p>Las finanzas y contrataciones del plantel quedan en manos de expertos internacionales (CEO y CFO) de carrera auditados.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <!-- CAPÍTULO 8: TRANSPARENCIA FINANCIERA (NUEVA) -->
+    <section class="slide slide-odd" id="transparencia">
+        <h2 class="slide-title fade-up">8. Transparencia Financiera</h2>
+        <div class="box">
+            <p style="margin-bottom: 25px;" class="fade-up">Inspirado en el modelo Bayern: el socio tiene derecho a saber exactamente cómo se gasta su dinero y el del club.</p>
+            <div class="grid">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <h3>Informe Financiero Anual</h3>
+                    <ul>
+                        <li>Publicación obligatoria cada <strong>31 de marzo</strong> del ejercicio anterior.</li>
+                        <li>Disponible en la App, web oficial y entregado físicamente en Matute.</li>
+                        <li>Redactado en lenguaje <strong>claro y accesible</strong> para el socio común, no solo para contadores.</li>
+                    </ul>
+                </div>
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </div>
+                    <h3>Auditoría Externa Independiente</h3>
+                    <ul>
+                        <li>Firma auditora <strong>distinta cada 3 años</strong> para evitar conflictos de interés.</li>
+                        <li>Resultados presentados en Asamblea General ante todos los socios.</li>
+                        <li>Cualquier socio hábil puede solicitar una auditoría extraordinaria con el respaldo del <strong>5% del padrón</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid" style="margin-top: 0;">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3>Dashboard Financiero en Tiempo Real</h3>
+                    <ul>
+                        <li>Portal exclusivo para socios con indicadores clave: <strong>ingresos, deuda, planilla y cantera</strong>.</li>
+                        <li>Actualización trimestral con gráficos simples y comparativa del año anterior.</li>
+                    </ul>
+                </div>
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Fondo de Reserva Intocable</h3>
+                    <ul>
+                        <li>Equivalente a <strong>3 meses de planilla</strong> siempre disponible en caja.</li>
+                        <li>Solo puede usarse por decisión del 60% del directorio y debe reponerse en 6 meses.</li>
+                        <li>Protege al club ante crisis como la pandemia o salidas de auspiciadores.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CIERRE FINAL -->
             <div class="card fade-up" style="margin-top: 45px; text-align: center; border-top: 5px solid var(--dorado-gloria); padding: 40px 30px;">
                 <svg width="55" height="63" viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:15px; opacity:0.85;">
                     <defs>
