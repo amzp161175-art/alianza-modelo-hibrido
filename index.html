@@ -1,134 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8"><title>Alianza Lima - Modelo Baviera</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alianza Lima - Plan Maestro Modelo Híbrido</title>
     <style>
-        :root { --blanco: #FFF; --azul: #0A1E3F; --gris: #F4F6F9; --dorado: #D4AF37; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background: var(--azul); }
-        .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; background: var(--blanco); border-bottom: 8px solid var(--azul); }
+        :root { --blanco: #FFF; --azul: #0A1E3F; --azul-m: #153462; --gris: #F4F6F9; --dorado: #D4AF37; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--azul); color: #1A202C; }
+        
+        /* Navegación Fija para la Exposición */
+        .nav-bar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10, 30, 63, 0.95); padding: 15px; display: flex; justify-content: center; gap: 15px; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); overflow-x: auto; }
+        .nav-bar a { color: var(--blanco); text-decoration: none; font-size: 0.9rem; font-weight: bold; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--dorado); transition: 0.3s; white-space: nowrap; }
+        .nav-bar a:hover { background: var(--dorado); color: var(--azul); }
+
+        .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 40px 40px 40px; background: var(--blanco); border-bottom: 8px solid var(--azul); scroll-snap-align: start; }
         .slide:nth-child(odd) { background: var(--gris); }
-        .slide-title { font-size: 2.2rem; color: var(--azul); margin-bottom: 20px; border-bottom: 4px solid var(--azul); width: 100%; max-width: 900px; text-transform: uppercase; }
-        .box { width: 100%; max-width: 900px; font-size: 1.2rem; line-height: 1.6; }
-        #portada { background: linear-gradient(135deg, var(--azul) 0%, #153462 100%); color: var(--blanco); text-align: center; }
-        #portada h1 { font-size: 3.2rem; margin-bottom: 15px; }
-        #portada h2 { font-size: 1.6rem; color: var(--dorado); margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
-        .card { background: var(--blanco); padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--azul); }
-        .card h3 { color: var(--azul); margin-bottom: 10px; }
-        .alert { background: var(--azul); color: var(--blanco); padding: 20px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 20px; }
-        li { margin-bottom: 10px; list-style-position: inside; }
+        .slide-title { font-size: 2.5rem; color: var(--azul); margin-bottom: 25px; border-bottom: 4px solid var(--azul); width: 100%; max-width: 1000px; text-transform: uppercase; letter-spacing: 1px; }
+        .box { width: 100%; max-width: 1000px; font-size: 1.2rem; line-height: 1.6; }
+        
+        #portada { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-m) 100%); color: var(--blanco); text-align: center; }
+        #portada h1 { font-size: 3.5rem; margin-bottom: 15px; letter-spacing: 2px; }
+        #portada h2 { font-size: 1.8rem; color: var(--dorado); margin-bottom: 30px; font-weight: 400; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 20px 0; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .card { background: var(--blanco); padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 6px solid var(--azul); }
+        .card h3 { color: var(--azul); margin-bottom: 15px; font-size: 1.4rem; border-bottom: 1px solid #E2E8F0; padding-bottom: 5px; }
+        .alert { background: var(--azul); color: var(--blanco); padding: 25px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 25px; font-size: 1.3rem; border: 1px solid var(--dorado); }
+        li { margin-bottom: 12px; list-style-position: inside; }
+        strong { color: var(--azul-m); }
+        .white-text strong { color: var(--dorado); }
+
+        @media (max-width: 768px) { .grid, .grid-3 { grid-template-columns: 1fr; } #portada h1 { font-size: 2.2rem; } .slide-title { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
 
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="nav-bar">
+        <a href="#portada">Inicio</a>
+        <a href="#arquitectura">1. Esquema Dual</a>
+        <a href="#acciones">2. Blindaje 71/29</a>
+        <a href="#captacion">3. Plan de Captación</a>
+        <a href="#reactivacion">4. Plan Amnistía</a>
+        <a href="#asambleas">5. Macro-Asambleas</a>
+        <a href="#gobierno">6. Gobierno</a>
+    </nav>
+
+    <!-- PORTADA -->
     <section class="slide" id="portada">
-        <h1>ALIANZA LIMA - MODELO BAVIERA</h1>
-        <h2>Transición hacia un Modelo Híbrido de Gestión Eficiente</h2>
-        <p>Escenario institucional post-salida del proceso concursal</p>
+        <h1>ALIANZA LIMA - PLAN MAESTRO</h1>
+        <h2>Reforma Societaria e Inclusión Masiva de la Identidad Blanquiazul</h2>
+        <p style="font-size: 1.3rem;">Escenario Técnico: Post-Salida del Régimen Concursal</p>
     </section>
 
-    <section class="slide">
-        <h2 class="slide-title">1. El Punto de Partida Obligatorio</h2>
+    <!-- 1. ARQUITECTURA -->
+    <section class="slide" id="arquitectura">
+        <h2 class="slide-title">1. Arquitectura Legal: El Esquema Dual</h2>
         <div class="box">
-            <div class="card" style="border-left-color: var(--dorado); background: #FFFDF3;">
-                <h3>Soberanía Institucional Recuperada</h3>
-                <ul>
-                    <li>Deuda concursal fiscal y privada liquidada al 100%.</li>
-                    <li>Extinción definitiva de la Junta de Acreedores e INDECOPI.</li>
-                    <li>El control político total del club regresa formalmente a la Asamblea de Socios.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section class="slide">
-        <h2 class="slide-title">2. Arquitectura Legal: El Esquema Dual</h2>
-        <div class="box">
-            <p>Se propone dividir la estructura del club en dos pilares conectados:</p>
+            <p style="margin-bottom: 15px;">Se divide la estructura institucional en dos pilares independientes para separar la política del negocio:</p>
             <div class="grid">
                 <div class="card">
                     <h3>A. El Club Social (Asociación Civil)</h3>
                     <ul>
-                        <li>Entidad sin fines de lucro manejada por los socios.</li>
-                        <li>Propietaria de Matute, escudo, colores, canteras y vóley.</li>
+                        <li>Entidad <strong>sin fines de lucro</strong> controlada al 100% por los socios.</li>
+                        <li>Dueña del Estadio de Matute, las canteras, el vóley y el patrimonio histórico.</li>
                     </ul>
                 </div>
                 <div class="card">
                     <h3>B. La Empresa (Alianza Lima Fútbol S.A.C.)</h3>
                     <ul>
-                        <li>Sociedad Anónima Cerrada corporativa.</li>
-                        <li>Administra y explota exclusivamente el fútbol profesional.</li>
+                        <li>Sociedad Anónima Cerrada de alta eficiencia empresarial.</li>
+                        <li>Administra y explota exclusivamente el <strong>fútbol profesional masculino y femenino</strong>.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="slide">
-        <h2 class="slide-title">3. Distribución de Acciones y Blindaje</h2>
+    <!-- 2. ACCIONES -->
+    <section class="slide" id="acciones">
+        <h2 class="slide-title">2. Distribución de Acciones y Blindaje</h2>
         <div class="box">
             <div class="grid">
                 <div class="card" style="background: var(--azul); color: white; text-align: center;">
-                    <h3 style="color: var(--dorado);">El Club Social (Socios)</h3>
-                    <p style="font-size: 3rem; font-weight: bold; margin: 10px 0;">71.00%</p>
-                    <p>Acciones con derecho a voto de por vida. El hincha no pierde el control.</p>
+                    <h3 style="color: var(--dorado); border-color: var(--azul-m);">El Club Social (Socios)</h3>
+                    <p style="font-size: 3.5rem; font-weight: bold; margin: 10px 0; color: var(--blanco);">71.00%</p>
+                    <p class="white-text"><strong>Mayoría absoluta perpetua.</strong> El poder final de voto jamás sale de las manos del hincha.</p>
                 </div>
                 <div class="card" style="text-align: center;">
-                    <h3>Inversores Privados</h3>
-                    <p style="font-size: 3rem; font-weight: bold; margin: 10px 0; color: #153462;">29.00%</p>
-                    <p>Tope de 9.66% por empresa (Ej: Un banco, telecomunicaciones, marca deportiva).</p>
+                    <h3>Inversores Privados (Marcas)</h3>
+                    <p style="font-size: 3.5rem; font-weight: bold; margin: 10px 0; color: var(--azul-m);">29.00%</p>
+                    <p>Fragmentado en un tope máximo de 9.66% por corporación (Ej: Banca, Telco, Indumentaria).</p>
                 </div>
             </div>
             <div class="alert">
-                🔒 CANDADO: Cambiar este porcentaje requiere el 75% de votos de la Asamblea General.
+                🔒 CANDADO INSTITUCIONAL: Cualquier intento de vender más del 29% requiere la aprobación obligatoria del 75% de la Asamblea General de Socios.
             </div>
         </div>
     </section>
 
-    <section class="slide">
-        <h2 class="slide-title">4. Gobierno Corporativo y Elecciones</h2>
+    <!-- 3. CAPTACIÓN DE SOCIOS -->
+    <section class="slide" id="captacion">
+        <h2 class="slide-title">3. Plan Nacional de Captación de Nuevos Socios</h2>
         <div class="box">
-            <div class="card" style="margin-bottom: 15px;">
-                <h3>Democracia Interna (Voto Directo)</h3>
-                <p>Cada 4 años, los socios eligen democráticamente al Presidente del Club Social.</p>
-            </div>
-            <div class="card" style="margin-bottom: 15px;">
-                <h3>El Consejo de Supervisión</h3>
-                <p>El presidente elegido por los socios lidera automáticamente el Directorio de la empresa de fútbol (5 representantes de socios y 3 de marcas privadas).</p>
-            </div>
-            <div class="card">
-                <h3>Gerencia Profesional</h3>
-                <p>El directorio político no gestiona el día a día. Se contrata vía headhunters a profesionales para los puestos de CEO, Finanzas y Director Deportivo.</p>
+            <p style="margin-bottom: 20px;">Para democratizar el club y romper las barreras históricas, el padrón se abre bajo una estrategia agresiva de accesibilidad:</p>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Apertura 100% Digital</h3>
+                    <ul>
+                        <li>Trámite de alta en <strong>5 minutos</strong> desde la App Oficial del club.</li>
+                        <li>Validación de identidad inmediata mediante <strong>biometría RENIEC</strong>.</li>
+                        <li>Eliminación de la antigua "firma de dos socios avales" para postular.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Socio Internacional</h3>
+                    <ul>
+                        <li>Categoría exclusiva para la gigantesca diáspora aliancista en EE.UU., España, Italia, Japón y Chile.</li>
+                        <li>Pago automatizado vía PayPal/Stripe.</li>
+                        <li>Prioridad en compra de entradas cuando viajen a Lima y voto digital.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Escala de Precios</h3>
+                    <ul>
+                        <li><strong>Cuota de Ingreso Única:</strong> S/. 50 soles (pago único simbólico).</li>
+                        <li><strong>Membresía Activa Adulto:</strong> S/. 30 soles mensuales.</li>
+                        <li><strong>Membresía Infantil / Menor:</strong> S/. 15 soles mensuales.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="slide">
-        <h2 class="slide-title">5. Destino de los Recursos</h2>
+    <!-- 4. RECOBRAR SOCIOS EXCLUIDOS -->
+    <section class="slide" id="reactivacion">
+        <h2 class="slide-title">4. Plan Amnistía Blanquiazul (Reactivación por Deuda)</h2>
         <div class="box">
+            <p style="margin-bottom: 20px;">El club no puede darles la espalda a los socios históricos que quedaron fuera durante los años oscuros de crisis financieras. Se establece la <strong>Amnistía General</strong>:</p>
             <div class="grid">
                 <div class="card">
-                    <h3>Socios y Taquillas Populares</h3>
-                    <p>Se queda al 100% en el Club Social. Financia las canteras, el vóley y congela precios de las tribunas Norte y Sur.</p>
+                    <h3>Condonación del 100% de Intereses</h3>
+                    <p>Se elimina cualquier cobro por moras o penalidades acumuladas. Al socio suspendido solo se le calculará el capital neto adeudado de los últimos meses activos antes de su suspensión.</p>
                 </div>
                 <div class="card">
-                    <h3>Capital Privado (El 29%)</h3>
-                    <p>Etiquetado por estatuto solo para infraestructura: Ampliación de Matute y construcción del Centro de Alto Rendimiento.</p>
+                    <h3>El Plan "Ponte al Día en Cuotas"</h3>
+                    <ul>
+                        <li>Fraccionamiento de la deuda histórica hasta en <strong>12 cuotas mensuales sin interés</strong> añadidas a su nueva mensualidad fija.</li>
+                        <li>El socio recupera su condición de "Hábil" de manera inmediata al pagar la primera cuota del fraccionamiento.</li>
+                    </ul>
                 </div>
+            </div>
+            <div class="card" style="margin-top: 15px; border-left-color: var(--dorado);">
+                <h3>Reconocimiento de Antigüedad</h3>
+                <p>Si el socio se acoge a la amnistía y liquida su deuda fraccionada, el club le <strong>restituye formalmente sus años de antigüedad acumulados</strong> previos a la suspensión. Esto es clave porque la antigüedad otorga mayor peso jerárquico y beneficios en sorteos institucionales.</p>
             </div>
         </div>
     </section>
 
-    <section class="slide" style="background: linear-gradient(135deg, var(--azul) 0%, #153462 100%); color: white; text-align: center;">
-        <h2 class="slide-title" style="color: white; border-color: var(--dorado); text-align: center;">¿Por qué este modelo?</h2>
-        <div class="box" style="font-size: 1.4rem; text-align: left; margin-top: 30px;">
-            <p style="margin-bottom: 15px;">🔹 <strong>No es privatización:</strong> El socio mantiene la última palabra con su voto.</p>
-            <p style="margin-bottom: 15px;">🔹 <strong>Fin de quiebras:</strong> Auditorías corporativas permanentes por parte de los socios minoritarios.</p>
-            <p style="margin-bottom: 30px;">🔹 <strong>Crecimiento:</strong> Billetera del primer mundo para competir en la Copa Libertadores.</p>
-            <h3 style="color: var(--dorado); text-align: center; font-size: 2.2rem; margin-top: 20px;">¡El club es de su gente!</h3>
-        </div>
-    </section>
-
-</body>
-</html>
