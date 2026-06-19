@@ -4,79 +4,273 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alianza Lima - Plan Maestro (Andrés Zevallos)</title>
-    <style>
-        :root { 
-            --blanco: #FFFFFF; 
-            --azul-alianza: #0A1E3F; 
-            --azul-sutil: #112A52; 
-            --gris-tribuna: #F4F7FA; 
-            --dorado-gloria: #D4AF37; 
-            --texto-oscuro: #1A202C;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        
-        /* Desplazamiento elástico continuo básico */
-        html { scroll-behavior: smooth; }
-        body { background: var(--azul-alianza); color: var(--texto-oscuro); overflow-x: hidden; }
-        
-        /* Barra de Navegación Fija Básica */
-        .nav-bar { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10, 30, 63, 0.98); padding: 15px; display: flex; justify-content: center; gap: 12px; z-index: 1000; border-bottom: 3px solid var(--dorado-gloria); box-shadow: 0 4px 15px rgba(0,0,0,0.3); overflow-x: auto; }
-        .nav-bar a { color: var(--blanco); text-decoration: none; font-size: 0.85rem; font-weight: bold; padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; white-space: nowrap; }
-        .nav-bar a:hover { background: var(--blanco); color: var(--azul-alianza); }
 
-        /* Estructura de Secciones Continuas */
-        .slide { 
-            min-height: 100vh; 
-            width: 100vw;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 140px 40px 80px 40px; 
-            background: var(--blanco); 
-            position: relative;
-            /* Margen protector para que la barra fija no tape los títulos al saltar */
-            scroll-margin-top: 100px;
+    <!-- GOOGLE FONTS: Bebas Neue para títulos de impacto, Inter para cuerpo de texto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =============================================
+           VARIABLES DE COLOR - Paleta Alianza Lima
+        ============================================= */
+        :root {
+            --blanco: #FFFFFF;
+            --azul-alianza: #0A1E3F;
+            --azul-sutil: #112A52;
+            --gris-tribuna: #F4F7FA;
+            --dorado-gloria: #D4AF37;
+            --dorado-suave: rgba(212, 175, 55, 0.15);
+            --texto-oscuro: #1A202C;
+            --sombra: 0 8px 30px rgba(0,0,0,0.10);
         }
-        
-        /* Fondos Alternados */
-        .slide-even { background: linear-gradient(90deg, #FFF 0%, #FFF 48%, var(--gris-tribuna) 48%, var(--gris-tribuna) 100%); }
-        .slide-odd { background: linear-gradient(90deg, var(--gris-tribuna) 0%, var(--gris-tribuna) 52%, #FFF 52%, #FFF 100%); }
-        
-        .slide-title { font-size: 2.2rem; color: var(--azul-alianza); margin-bottom: 20px; border-bottom: 4px solid var(--azul-alianza); width: 100%; max-width: 1000px; text-transform: uppercase; font-weight: bold; }
-        .box { width: 100%; max-width: 1000px; font-size: 1.2rem; line-height: 1.6; }
-        
-        /* Estilo Portadas Oscuras */
-        .identity-slide { background: linear-gradient(135deg, var(--azul-alianza) 0%, var(--azul-sutil) 100%) !important; color: var(--blanco) !important; }
-        .identity-slide h1 { color: var(--blanco) !important; font-size: 3.5rem; margin-bottom: 15px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); text-align: center; width: 100%; }
-        .identity-slide h2 { color: var(--dorado-gloria) !important; font-size: 1.6rem; margin-bottom: 35px; text-transform: uppercase; text-align: center; }
-        .identity-slide p { color: var(--blanco) !important; opacity: 0.9; text-align: center; }
+
+        /* =============================================
+           RESET Y BASE
+        ============================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--azul-alianza);
+            color: var(--texto-oscuro);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* =============================================
+           ANIMACIONES AL SCROLL (Intersection Observer)
+           Las secciones arrancan invisibles y suben al aparecer
+        ============================================= */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-up:nth-child(2) { transition-delay: 0.1s; }
+        .fade-up:nth-child(3) { transition-delay: 0.2s; }
+        .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+        @keyframes heroEntrance {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero-content {
+            animation: heroEntrance 1s ease forwards;
+        }
+
+        /* =============================================
+           BARRA DE NAVEGACIÓN FIJA
+        ============================================= */
+        .nav-bar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(10, 30, 63, 0.97);
+            padding: 14px 20px;
+            display: flex; justify-content: center; gap: 10px;
+            z-index: 1000;
+            border-bottom: 3px solid var(--dorado-gloria);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            overflow-x: auto;
+            backdrop-filter: blur(8px);
+        }
+        .nav-bar a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 7px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.3s;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+        .nav-bar a:hover {
+            background: var(--dorado-gloria);
+            color: var(--azul-alianza);
+            border-color: var(--dorado-gloria);
+        }
+
+        /* =============================================
+           ESTRUCTURA DE SECCIONES
+        ============================================= */
+        .slide {
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 140px 40px 80px 40px;
+            background: var(--blanco);
+            position: relative;
+            scroll-margin-top: 80px;
+        }
+
+        .slide-even { background: linear-gradient(160deg, #fff 60%, #f0f4f9 100%); }
+        .slide-odd  { background: linear-gradient(160deg, #f0f4f9 0%, #fff 60%); }
+
+        .slide-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.8rem;
+            color: var(--azul-alianza);
+            margin-bottom: 25px;
+            border-bottom: 4px solid var(--dorado-gloria);
+            width: 100%;
+            max-width: 1000px;
+            letter-spacing: 1px;
+            padding-bottom: 10px;
+        }
+        .box {
+            width: 100%;
+            max-width: 1000px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* =============================================
+           PORTADA HERO
+        ============================================= */
+        .identity-slide {
+            background: linear-gradient(145deg, #061528 0%, var(--azul-alianza) 50%, var(--azul-sutil) 100%) !important;
+            color: var(--blanco) !important;
+            background-image:
+                radial-gradient(circle, rgba(212,175,55,0.06) 1px, transparent 1px),
+                linear-gradient(145deg, #061528 0%, var(--azul-alianza) 50%, var(--azul-sutil) 100%) !important;
+            background-size: 30px 30px, 100% 100% !important;
+        }
+        .identity-slide h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--blanco) !important;
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .identity-slide h2 {
+            color: var(--dorado-gloria) !important;
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .identity-slide p { color: rgba(255,255,255,0.88) !important; text-align: center; }
         .identity-slide .slide-title { color: var(--blanco) !important; border-bottom-color: var(--dorado-gloria); }
-        
-        /* Componentes */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 20px 0; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 20px 0; }
-        .card { background: rgba(255, 255, 255, 0.98); padding: 25px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); border-top: 5px solid var(--azul-alianza); color: var(--texto-oscuro); }
-        .card h3 { color: var(--azul-alianza); margin-bottom: 15px; font-size: 1.35rem; font-weight: bold; padding-bottom: 5px; border-bottom: 2px solid var(--gris-tribuna); }
-        .alert { background: var(--azul-alianza); color: var(--blanco); padding: 25px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 25px; font-size: 1.25rem; border: 2px solid var(--dorado-gloria); }
-        
-        li { margin-bottom: 12px; list-style-position: inside; }
         strong { color: var(--azul-alianza); }
         .identity-slide strong { color: var(--dorado-gloria); }
 
-        /* Firma Fija */
-        .author-signature { position: fixed; bottom: 15px; left: 20px; background: rgba(10, 30, 63, 0.95); color: var(--blanco); padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; font-weight: bold; border-left: 3px solid var(--dorado-gloria); z-index: 999; box-shadow: 0 2px 8px rgba(0,0,0,0.3); pointer-events: none; }
+        /* =============================================
+           ESCUDO SVG EN PORTADA
+        ============================================= */
+        .escudo-container {
+            margin: 30px auto 35px auto;
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 0 18px rgba(212,175,55,0.5));
+            animation: pulsoDorado 3s ease-in-out infinite;
+        }
+        @keyframes pulsoDorado {
+            0%, 100% { filter: drop-shadow(0 0 18px rgba(212,175,55,0.4)); }
+            50%       { filter: drop-shadow(0 0 35px rgba(212,175,55,0.8)); }
+        }
+
+        /* =============================================
+           TARJETAS
+        ============================================= */
+        .grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 20px 0; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 20px 0; }
+
+        .card {
+            background: var(--blanco);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: var(--sombra);
+            border-top: 5px solid var(--azul-alianza);
+            color: var(--texto-oscuro);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.13);
+        }
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--dorado-suave);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .card-icon svg { width: 24px; height: 24px; stroke: var(--dorado-gloria); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .card h3 {
+            color: var(--azul-alianza);
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gris-tribuna);
+        }
+
+        .alert {
+            background: linear-gradient(135deg, var(--azul-alianza), var(--azul-sutil));
+            color: var(--blanco);
+            padding: 25px 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 25px;
+            font-size: 1.1rem;
+            border: 2px solid var(--dorado-gloria);
+            box-shadow: var(--sombra);
+        }
+
+        li { margin-bottom: 10px; list-style-position: inside; }
+
+        /* =============================================
+           FIRMA FIJA
+        ============================================= */
+        .author-signature {
+            position: fixed; bottom: 15px; left: 20px;
+            background: rgba(10, 30, 63, 0.95);
+            color: var(--blanco);
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-left: 3px solid var(--dorado-gloria);
+            z-index: 999;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+            pointer-events: none;
+            backdrop-filter: blur(6px);
+        }
         .author-signature span { color: var(--dorado-gloria); }
 
+        /* =============================================
+           RESPONSIVE
+        ============================================= */
         @media (max-width: 1100px) { .author-signature { display: none !important; } }
-        @media (max-width: 768px) { .grid, .grid-3 { grid-template-columns: 1fr; } .identity-slide h1 { font-size: 2rem; } .slide-title { font-size: 1.5rem; } .nav-bar { flex-wrap: wrap; } }
+        @media (max-width: 768px) {
+            .grid, .grid-3 { grid-template-columns: 1fr; }
+            .identity-slide h1 { font-size: 2.4rem; }
+            .slide-title { font-size: 2rem; }
+            .nav-bar { flex-wrap: wrap; }
+            .slide { padding: 120px 20px 60px 20px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="author-signature">Propuesta por: <span>Andrés Zevallos</span> (Hincha Aliancista)</div>
 
-    <!-- ENLACES NATIVOS SIN FALLAS -->
     <nav class="nav-bar">
         <a href="#portada">Inicio</a>
         <a href="#arquitectura">1. Esquema Dual</a>
@@ -86,13 +280,32 @@
         <a href="#gobernanza">5. Gobernanza 20k</a>
     </nav>
 
-    <!-- PANTALLA 0: PORTADA -->
+    <!-- PORTADA -->
     <section class="slide identity-slide" id="portada">
-        <div class="box">
+        <div class="box hero-content" style="text-align:center;">
+            <div class="escudo-container">
+                <svg width="140" height="160" viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="franjas" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="#0A1E3F"/>
+                            <stop offset="48%"  stop-color="#0A1E3F"/>
+                            <stop offset="48%"  stop-color="#FFFFFF"/>
+                            <stop offset="52%"  stop-color="#FFFFFF"/>
+                            <stop offset="52%"  stop-color="#0A1E3F"/>
+                            <stop offset="100%" stop-color="#0A1E3F"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M70 5 L130 30 L130 95 Q130 135 70 155 Q10 135 10 95 L10 30 Z" fill="url(#franjas)" stroke="#D4AF37" stroke-width="4"/>
+                    <polygon points="70,48 74,62 88,62 77,71 81,85 70,76 59,85 63,71 52,62 66,62" fill="#D4AF37"/>
+                    <text x="70" y="128" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="22" fill="#D4AF37" letter-spacing="4">AL</text>
+                </svg>
+            </div>
             <h1>PLAN MAESTRO: REFORMA SOCIETARIA</h1>
             <h2>Transición hacia el Modelo Híbrido Blanquiazul</h2>
-            <p style="font-size: 1.3rem;">Estrategia institucional completa diseñada para el escenario post-salida del régimen concursal</p>
-            <div style="margin-top: 40px; font-size: 1.1rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; color: var(--dorado-gloria); font-weight: bold; text-align: center;">
+            <p style="font-size: 1.2rem; max-width: 650px; margin: 0 auto;">
+                Estrategia institucional completa diseñada para el escenario post-salida del régimen concursal
+            </p>
+            <div style="margin-top: 40px; font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; color: var(--dorado-gloria); font-weight: 600;">
                 Desarrollado con orgullo por un hincha para la familia blanquiazul
             </div>
         </div>
@@ -100,18 +313,24 @@
 
     <!-- CAPÍTULO 1 -->
     <section class="slide slide-even" id="arquitectura">
-        <h2 class="slide-title">1. Arquitectura Legal: El Esquema Dual</h2>
+        <h2 class="slide-title fade-up">1. Arquitectura Legal: El Esquema Dual</h2>
         <div class="box">
-            <p style="margin-bottom: 20px;">Propuesta de división estructural para separar la política del negocio del fútbol:</p>
+            <p style="margin-bottom: 25px;" class="fade-up">Propuesta de división estructural para separar la política del negocio del fútbol:</p>
             <div class="grid">
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+                    </div>
                     <h3>A. El Club Social (Asociación Civil)</h3>
                     <ul>
                         <li>Entidad <strong>sin fines de lucro</strong> controlada al 100% por los socios mediante el voto.</li>
                         <li>Propietaria legítima de <strong>Matute</strong>, las canteras, el vóley y la historia blanquiazul.</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
                     <h3>B. La Empresa (Alianza Lima Fútbol S.A.C.)</h3>
                     <ul>
                         <li>Sociedad Anónima Cerrada de alta competencia comercial.</li>
@@ -121,23 +340,30 @@
             </div>
         </div>
     </section>
+
     <!-- CAPÍTULO 2 -->
     <section class="slide slide-odd" id="acciones">
-        <h2 class="slide-title">2. Distribución de Acciones y Blindaje</h2>
+        <h2 class="slide-title fade-up">2. Distribución de Acciones y Blindaje</h2>
         <div class="box">
             <div class="grid">
-                <div class="card" style="background: var(--azul-alianza); color: white; text-align: center; border: none;">
-                    <h3 style="color: var(--dorado-gloria); border-color: var(--azul-sutil);">El Club Social (Socios)</h3>
-                    <p style="font-size: 4.5rem; font-weight: bold; margin: 10px 0;">71.00%</p>
-                    <p><strong>Mayoría absoluta perpetua.</strong> El poder final político jamás sale de las manos del hincha.</p>
+                <div class="card fade-up" style="background: var(--azul-alianza); color: white; text-align: center; border: none;">
+                    <div class="card-icon" style="background: rgba(212,175,55,0.2); margin: 0 auto 14px auto;">
+                        <svg viewBox="0 0 24 24" style="stroke:#D4AF37;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 style="color: var(--dorado-gloria); border-color: rgba(255,255,255,0.1);">El Club Social (Socios)</h3>
+                    <p style="font-size: 4.5rem; font-weight: 700; margin: 10px 0; font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">71%</p>
+                    <p style="color: rgba(255,255,255,0.85);"><strong style="color:var(--dorado-gloria);">Mayoría absoluta perpetua.</strong> El poder final político jamás sale de las manos del hincha.</p>
                 </div>
-                <div class="card" style="text-align: center; border-top-color: var(--dorado-gloria);">
+                <div class="card fade-up" style="text-align: center; border-top-color: var(--dorado-gloria);">
+                    <div class="card-icon" style="margin: 0 auto 14px auto;">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
                     <h3>Inversionistas Corporativos</h3>
-                    <p style="font-size: 4.5rem; font-weight: bold; margin: 10px 0; color: var(--azul-alianza);">29.00%</p>
+                    <p style="font-size: 4.5rem; font-weight: 700; margin: 10px 0; color: var(--azul-alianza); font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">29%</p>
                     <p>Capital fragmentado en un límite estricto de <strong>9.66% máximo por marca</strong> (Banca, Telcos o Indumentaria).</p>
                 </div>
             </div>
-            <div class="alert">
+            <div class="alert fade-up">
                 🔒 EL CANDADO DE MATUTE: Cualquier intento de ampliar el capital privado por encima del 29% requerirá la aprobación obligatoria del 75% de los socios activos en una Asamblea General.
             </div>
         </div>
@@ -145,11 +371,14 @@
 
     <!-- CAPÍTULO 3 -->
     <section class="slide slide-even" id="captacion">
-        <h2 class="slide-title">3. Plan de Captación Masiva de Socios</h2>
+        <h2 class="slide-title fade-up">3. Plan de Captación Masiva de Socios</h2>
         <div class="box">
-            <p style="margin-bottom: 20px;">Estrategia agresiva para democratizar el club y romper las barreras de afiliación:</p>
+            <p style="margin-bottom: 25px;" class="fade-up">Estrategia agresiva para democratizar el club y romper las barreras de afiliación:</p>
             <div class="grid-3">
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
                     <h3>Inscripción 100% Digital</h3>
                     <ul>
                         <li>Afiliación directa vía <strong>App Oficial</strong> en 5 minutos.</li>
@@ -157,13 +386,19 @@
                         <li>Eliminación total de las firmas de socios avales.</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
                     <h3>Socio Internacional</h3>
                     <ul>
                         <li>Categoría para la enorme comunidad aliancista en el extranjero con voto digital y prioridad en entradas.</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    </div>
                     <h3>Cuotas Populares</h3>
                     <ul>
                         <li><strong>Inscripción inicial:</strong> S/. 50 (Pago único).</li>
@@ -177,15 +412,21 @@
 
     <!-- CAPÍTULO 4 -->
     <section class="slide slide-odd" id="reactivacion">
-        <h2 class="slide-title">4. Plan Amnistía Blanquiazul</h2>
+        <h2 class="slide-title fade-up">4. Plan Amnistía Blanquiazul</h2>
         <div class="box">
-            <p style="margin-bottom: 20px;">Justicia histórica para recuperar a los socios históricos suspendidos por deuda:</p>
+            <p style="margin-bottom: 25px;" class="fade-up">Justicia histórica para recuperar a los socios históricos suspendidos por deuda:</p>
             <div class="grid">
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
                     <h3>Condonación Total de Moras</h3>
                     <p>Cero cobros por intereses o penalidades acumuladas. Al socio adeudado se le calculará únicamente el saldo líquido de sus últimos meses activos.</p>
                 </div>
-                <div class="card">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
                     <h3>Programa "Ponte al Día"</h3>
                     <ul>
                         <li>Fraccionamiento de la deuda base en hasta <strong>12 cuotas fijas sin intereses</strong> comerciales.</li>
@@ -193,7 +434,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="card" style="margin-top: 15px; border-top-color: var(--dorado-gloria);">
+            <div class="card fade-up" style="margin-top: 20px; border-top-color: var(--dorado-gloria);">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><polyline points="8 6 2 6 2 12 8 6"/><polyline points="16 6 22 6 22 12 16 6"/><path d="M12 18v4M8 22h8M12 2v4M7 6a5 5 0 0 0 10 0"/></svg>
+                </div>
                 <h3>Restitución Completa de la Antigüedad</h3>
                 <p>Una vez completado el plan, el club <strong>restituye el 100% de los años de antigüedad</strong> acumulados del socio histórico, protegiendo su estatus dentro de la vida política del club.</p>
             </div>
@@ -201,35 +445,71 @@
     </section>
 
     <!-- CAPÍTULO 5 -->
-    <section class="slide slide-odd" id="gobernanza">
+    <section class="slide slide-even" id="gobernanza">
         <div class="box">
-            <h2 class="slide-title" style="text-align: center; width: 100%;">5. Gobernanza Eficiente de 20,000 Socios</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Cómo mantener el orden institucional, la transparencia y el voto directo en una masa social masiva:</p>
+            <h2 class="slide-title fade-up" style="text-align: center; width: 100%;">5. Gobernanza Eficiente de 20,000 Socios</h2>
+            <p style="text-align: center; margin-bottom: 30px;" class="fade-up">Cómo mantener el orden institucional, la transparencia y el voto directo en una masa social masiva:</p>
             <div class="grid-3">
-                <div class="card" style="color: var(--texto-oscuro);">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
                     <h3>Voto Democrático</h3>
                     <p>El socio sigue eligiendo en elecciones libres en las urnas al Presidente del Club Social cada 4 años.</p>
                 </div>
-                <div class="card" style="color: var(--texto-oscuro);">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
                     <h3>Control y Contrapeso</h3>
                     <p>El presidente elegido por la hinchada lidera el directorio de la empresa corporativa de fútbol profesional.</p>
                 </div>
-                <div class="card" style="color: var(--texto-oscuro);">
+                <div class="card fade-up">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </div>
                     <h3>Gerencia Profesional</h3>
                     <p>Las finanzas y contrataciones del plantel quedan en manos de expertos internacionales (CEO y CFO) de carrera auditados.</p>
                 </div>
             </div>
-            
-            <div class="card" style="margin-top: 40px; text-align: center; border-top: 5px solid var(--dorado-gloria); background: rgba(255, 255, 255, 0.98); color: var(--texto-oscuro); padding-bottom: 35px;">
-                <h3>¡Muchas Gracias!</h3>
-                <p style="font-size: 1.1rem; font-weight: bold; color: var(--azul-sutil); margin-bottom: 15px;">Esta propuesta de reforma está abierta al debate técnico de toda la familia blanquiazul.</p>
-                <div style="margin-top: 15px; font-size: 0.95rem; color: #555; font-style: italic; border-top: 1px solid #E2E8F0; padding-top: 15px;">
-                    Documento diseñado por: <strong>Andrés Zevallos</strong><br>
+
+            <div class="card fade-up" style="margin-top: 45px; text-align: center; border-top: 5px solid var(--dorado-gloria); padding: 40px 30px;">
+                <svg width="55" height="63" viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:15px; opacity:0.85;">
+                    <defs>
+                        <linearGradient id="franjasCierre" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="#0A1E3F"/>
+                            <stop offset="48%"  stop-color="#0A1E3F"/>
+                            <stop offset="48%"  stop-color="#FFFFFF"/>
+                            <stop offset="52%"  stop-color="#FFFFFF"/>
+                            <stop offset="52%"  stop-color="#0A1E3F"/>
+                            <stop offset="100%" stop-color="#0A1E3F"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M70 5 L130 30 L130 95 Q130 135 70 155 Q10 135 10 95 L10 30 Z" fill="url(#franjasCierre)" stroke="#D4AF37" stroke-width="4"/>
+                    <polygon points="70,48 74,62 88,62 77,71 81,85 70,76 59,85 63,71 52,62 66,62" fill="#D4AF37"/>
+                </svg>
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 1px; border: none;">¡Muchas Gracias!</h3>
+                <p style="font-size: 1.05rem; font-weight: 600; color: var(--azul-sutil); margin: 12px 0;">Esta propuesta de reforma está abierta al debate técnico de toda la familia blanquiazul.</p>
+                <div style="margin-top: 18px; font-size: 0.92rem; color: #666; font-style: italic; border-top: 1px solid #E2E8F0; padding-top: 16px;">
+                    Documento diseñado por: <strong style="color: var(--azul-alianza);">Andrés Zevallos</strong><br>
                     Socio, Hincha y Defensor de la Identidad de Alianza Lima
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        const elementosAnimados = document.querySelectorAll('.fade-up');
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach(entrada => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('visible');
+                    observador.unobserve(entrada.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        elementosAnimados.forEach(el => observador.observe(el));
+    </script>
 
 </body>
 </html>
